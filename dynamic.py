@@ -8,6 +8,7 @@
 # Project 4: Exhaustive vs. Dynamic Programing
 # Part B: The Dynamic Programming Approach
 import sys
+import itertools
 
 def main():
     pass
