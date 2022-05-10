@@ -17,10 +17,60 @@ def stock_combinations(items: list) -> list:
         parameters -
             items (list): an iterable variable, or list
         return -
-            powerset (list): a list wit all possible combinations of items
+            powerset (list): a list with all possible combinations of items
     """
     s = list(items)
     return itertools.chain.from_iterable(itertools.combinations(s, r) for r in range(len(s)+1))
+
+
+def total_value_items(items: list) -> int:
+    """
+    Function that calculates the total value of the stocks given in items
+
+        parameters -
+            items (list): list of lists [x = number of stocks, y = value]
+
+        return -
+            total (int): total value of all the y inputs in list
+    """
+    total = 0
+    for item in items:
+        total += item[1]
+    return total
+
+def total_value_indices(items: list, indices: list) -> int:
+    """
+    Function that calculates the total value of the stocks given in items with
+    the indices listed in indices.
+
+        parameters -
+            items (list): list of lists [x = number of stocks, y = value]
+            indices (list): list of indices in items
+
+        return -
+            total (int): total value of all the y inputs in list
+    """
+    total = 0
+    for i in indices:
+        total += items[i][1]
+    return total
+
+def verify_combination(M: int, items: list, candidate: list) -> bool:
+    """
+    checks if the candidate total value is less than or equal to the maximum
+    value M
+        parameters -
+            M (int): total available investment sum
+            items (list): list of lists [x = number of stocks, y = value]
+            candidate (list): list of indices of values in items
+
+        return -
+            valid (bool): true if total number is less than or equal to M, false
+            otherwise
+    """
+    return (total_value_indices(items, candidate) <= M)
+         
+
 
 def stock_maximization(M: int, items: list) -> list:
     """  
@@ -30,15 +80,21 @@ def stock_maximization(M: int, items: list) -> list:
     
     parameters - 
         M (int): total available investment sum
-        items (list): list of lists [ x = number of stocks, y = value]
+        items (list): list of lists [x = number of stocks, y = value]
     
     return -
         best (list): subset of items with the highest value within given limit
 
     """
     best = None
-    for candidates in stock_combinations(items):
-        print(candidates)
+    for candidate in stock_combinations(range(len(items))):
+        print(candidate)
+        if verify_combination(M, items, candidate):
+            print("valid")
+            if best == None or total_value_indices(items, candidate) > total_value_indices(items, best):
+                best = candidate
+    
+    return best
 
 
 def main():
@@ -58,7 +114,7 @@ def main():
         max = 10
         items = [[1, 2], [3, 3], [5, 6], [6, 7]]
 
-    stock_maximization(max, items)
+    print("Best:", stock_maximization(max, items))
 
 
 if __name__ == "__main__":
