@@ -98,8 +98,7 @@ def main():
     print("Total Available:", max)
     print("Items:", items)
     best_indices =  stock_maximization(max, items)
-    print(total_value(items, best_indices), best_indices)
-
+    print("{total:.2f} {best}".format(total = total_value(items, best_indices), best = best_indices))
 
 if __name__ == "__main__":
     main()
