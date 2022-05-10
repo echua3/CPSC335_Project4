@@ -62,13 +62,13 @@ def stock_maximization(M: float, items: list) -> list:
     subsets, then selects the subset with the highest value that is still
     under the available fund limit. It recomputes combination at each state.
     
-    parameters - 
-        M (float): total available investment sum
-        items (list): list of lists [x = number of stocks, y = value]
-    
-    return -
-        best (list): subset of items with the highest value within given limit
-
+        parameters - 
+            M (float): total available investment sum
+            items (list): list of lists [x = number of stocks, y = value]
+        
+        return -
+            best (list): subset of items with the highest value within given 
+            limit
     """
     best = None
     for candidate in stock_combinations(range(len(items))):
