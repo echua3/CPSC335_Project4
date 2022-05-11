@@ -12,13 +12,12 @@ import sys
 def first_valid(iterable, default=False, pred=lambda x: x is not None):
     """
     Returns the first non None value in the iterable (list).
+    Function based on first_true recipe in the itertools documentation
 
     If no true value is found, returns *default*
 
     If *pred* is not None, returns the first item for which pred(item) is true.
     """
-    # first_true([a,b,c], x) --> a or b or c or x
-    # first_true([a,b], x, f) --> a if f(a) else b if f(b) else x
     return next(filter(pred, iterable), default)
 
 def total_stocks(items: list, indices: list) -> float:
@@ -77,7 +76,7 @@ def stock_maximization(M: float, items: list) -> list:
             print("current item: ", item)
             print("current result: ", result)
             if value >= y and result[value - y] is not None and i not in result[value - y]:
-                candidate = result[value - y] + [i]
+                candidate = [i] + result[value - y]
                 print("candidate:", candidate)
                 if result[value] is None or total_stocks(items, candidate) > total_stocks(items, result[value]):
                     print("update result: ", candidate)
