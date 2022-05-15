@@ -115,13 +115,15 @@ def stock_maximization(M: float, items: list) -> list:
     best = None
     for candidate in stock_combinations(range(len(items))):
         if verify_combination(M, items, candidate):
-            candidate_stocks, candidate_value = total_value(items, candidate)
-            if best is not None:
+            if best == None:
+                best = candidate
+            else:
+                candidate_stocks, candidate_value = total_value(items, candidate)
                 best_stocks, best_value = total_value(items, best)
-            if best == None or candidate_value > best_value:
-                best = candidate
-            elif candidate_value == best_value and candidate_stocks > best_stocks:
-                best = candidate
+                if candidate_value > best_value:
+                    best = candidate
+                elif candidate_value == best_value and candidate_stocks > best_stocks:
+                    best = candidate
     return best
 
 
