@@ -10,7 +10,6 @@
 # Part B: The Dynamic Programming Approach
 import sys
 import timeit
-import time
 import exhaustive
 import dynamic
 
@@ -70,22 +69,17 @@ def main():
     print("Total Available:", max)
     print("Items:", items)
 
-    start_time_e = time.time()      # track runtime
     best_indices_e =  list(exhaustive.stock_maximization(max, items))
-    time_e = start_time_e - time.time()
-
-    start_time_d = time.time()      # track runtime
     best_indices_d =  dynamic.stock_maximization(max, items)
-    time_d = start_time_d - time.time()
 
     # print results
     print("Exhaustive Approach Result:")
-    print("{total:.2f} {best}".format(total = exhaustive.total_value(items, best_indices_e)[1], best = best_indices_e))
-    print("Runtime: ", time_e)      # print runtime 
+    print("{total:.2f} {best}".format(total = exhaustive.total_value(items,
+        best_indices_e)[1], best = best_indices_e))
 
     print("Dynamic Approach Result:")
-    print("{total} {best}".format(total = dynamic.total_value(items, best_indices_d), best = best_indices_d))
-    print("Runtime: ", time_d)      # print runtime
+    print("{total} {best}".format(total = dynamic.total_value(items,
+        best_indices_d), best = best_indices_d))
     print()
     exhaustive_time()
     dynamic_time()
