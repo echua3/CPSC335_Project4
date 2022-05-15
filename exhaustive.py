@@ -8,7 +8,6 @@
 # Project 4: Exhaustive vs. Dynamic Programing
 # Part A: The Exhaustive Search Approach
 import sys
-import itertools
 
 def chain(args):
     """
