@@ -69,19 +69,19 @@ def stock_maximization(M: float, items: list) -> list:
     """
     result = [None] * (M + 1)
     result[0] = list()
-    print(result)
+    # print(result)
     for value in range(1, M+1):
         for i, item in enumerate(items):
             _, y = item
-            print("current item: ", item)
-            print("current result: ", result)
+            # print("current item: ", item)
+            # print("current result: ", result)
             if value >= y and result[value - y] is not None and i not in result[value - y]:
                 candidate = [i] + result[value - y]
-                print("candidate:", candidate)
+                # print("candidate:", candidate)
                 if result[value] is None or total_stocks(items, candidate) > total_stocks(items, result[value]):
-                    print("update result: ", candidate)
+                    # print("update result: ", candidate)
                     result[value] = candidate
-    print("Result: ", result)
+    # print("Result: ", result)
     return first_valid(result[::-1])
 
 
@@ -103,7 +103,6 @@ def main():
     print("Total Available:", max)
     print("Items:", items)
     best_indices =  stock_maximization(max, items)
-    print(best_indices)
     print("{total:.2f} {best}".format(total = total_value(items, best_indices), best = best_indices))
 
 if __name__ == "__main__":
