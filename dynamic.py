@@ -54,7 +54,7 @@ def total_value(items: list, indices: list) -> float:
         total += items[i][1]
     return total
 
-def stock_maximization(M: float, items: list) -> list:
+def stock_maximization(M: int, items: list) -> list:
     """  
     This function uses top-down dynamic programming to handle the overlapping
     subproblems. A two-dimensional array is used to store the results of all
@@ -75,10 +75,12 @@ def stock_maximization(M: float, items: list) -> list:
             _, y = item
             # print("current item: ", item)
             # print("current result: ", result)
-            if value >= y and result[value - y] is not None and i not in result[value - y]:
+            if value >= y and result[value - y] is not None and (i not in 
+                result[value - y]):
                 candidate = [i] + result[value - y]
                 # print("candidate:", candidate)
-                if result[value] is None or total_stocks(items, candidate) > total_stocks(items, result[value]):
+                if result[value] is None or (total_stocks(items, candidate) > 
+                    total_stocks(items, result[value])):
                     # print("update result: ", candidate)
                     result[value] = candidate
     # print("Result: ", result)
@@ -103,7 +105,8 @@ def main():
     print("Total Available:", max)
     print("Items:", items)
     best_indices =  stock_maximization(max, items)
-    print("{total:.2f} {best}".format(total = total_value(items, best_indices), best = best_indices))
+    print("{total:.2f} {best}".format(total = total_value(items, best_indices),
+        best = best_indices))
 
 if __name__ == "__main__":
     main()
