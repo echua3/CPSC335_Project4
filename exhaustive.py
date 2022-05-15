@@ -10,6 +10,46 @@
 import sys
 import itertools
 
+def chain(args):
+    """
+    Function to make an iterator that gets all the elements from the iterable
+    argument. 
+        parameters -
+            args: iterable variable
+        return -
+            element: an element from the iterable argument 
+    """
+    for i in args:
+        for element in i:
+            yield element
+
+def combinations(items: list, l: int):
+    """ 
+    Function to make all the possible combinations of length l from the iterable
+    input. Inspired by the itertools combination function.
+        parameters -
+            items (list): iterable to make the combinations out of
+            l (int) : length of the combinations
+        return -
+            tuple of the combinations
+    """
+    values = tuple(items)
+    n = len(values)
+    if l > n:
+        return
+    indices = list(range(l))
+    yield tuple(values[i] for i in indices)
+    while True:
+        for i in reversed(range(l)):
+            if indices[i] != i + n - l:
+                break
+        else:
+            return
+        indices[i] += 1
+        for j in range(i+1, l):
+            indices[j] = indices[j-1] + 1
+        yield tuple(values[i] for i in indices)
+
 def stock_combinations(items: list) -> list:
     """ 
     Function to get the powerset of a set(list), returned as a list.
@@ -20,25 +60,27 @@ def stock_combinations(items: list) -> list:
             powerset (list): a list with all possible combinations of items
     """
     s = list(items)
-    return itertools.chain.from_iterable(itertools.combinations(s, r) 
-        for r in range(len(s)+1))
+    return chain(combinations(s, r) for r in range(len(s)+1))
 
-def total_value(items: list, indices: list) -> float:
+def total_value(items: list, indices: list) -> tuple:
     """
-    Function that calculates the total value of the stocks given in items with
-    the indices listed in indices.
+    Function that calculates the total stocks and value of the stocks given 
+    in items with the indices listed in indices.
 
         parameters -
             items (list): list of lists [x = number of stocks, y = value]
             indices (list): list of indices in items
 
         return -
-            total (float): total value of all the y inputs in list
+            total_stocks (int): total stocks of all the x inputs in list
+            total_val (float): total value of all the y inputs in list
     """
-    total = 0
+    total_stocks = 0
+    total_val = 0
     for i in indices:
-        total += items[i][1]
-    return total
+        total_stocks += items[i][0]
+        total_val += items[i][1]
+    return total_stocks, total_val
 
 def verify_combination(M: float, items: list, candidate: list) -> bool:
     """
@@ -53,7 +95,7 @@ def verify_combination(M: float, items: list, candidate: list) -> bool:
             valid (bool): true if total number is less than or equal to M, false
             otherwise
     """
-    return (total_value(items, candidate) <= M)
+    return (total_value(items, candidate)[1] <= M)
          
 
 def stock_maximization(M: float, items: list) -> list:
@@ -73,7 +115,12 @@ def stock_maximization(M: float, items: list) -> list:
     best = None
     for candidate in stock_combinations(range(len(items))):
         if verify_combination(M, items, candidate):
-            if best == None or total_value(items, candidate) > total_value(items, best):
+            candidate_stocks, candidate_value = total_value(items, candidate)
+            if best is not None:
+                best_stocks, best_value = total_value(items, best)
+            if best == None or candidate_value > best_value:
+                best = candidate
+            elif candidate_value == best_value and candidate_stocks > best_stocks:
                 best = candidate
     return best
 
@@ -98,7 +145,7 @@ def main():
     print("Total Available:", max)
     print("Items:", items)
     best_indices =  stock_maximization(max, items)
-    print("{total:.2f} {best}".format(total = total_value(items, best_indices), best = best_indices))
+    print("{total:.2f} {best}".format(total = total_value(items, best_indices)[1], best = best_indices))
 
 if __name__ == "__main__":
     main()
