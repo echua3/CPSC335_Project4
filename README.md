@@ -5,7 +5,7 @@
 
 ### Epiphany Chua echua@csu.fullerton.edu
 
-[Github Repo link](https://github.com/echua3/CSUF335-Project4/tree/main "CPSC 335 Project 4 git repository")
+[Github Repo link](https://github.com/echua3/CPSC335_Project4 "CPSC 335 Project 4 git repository")
 
 Includes **Part A: The Exhaustive Search Approach** and **Part B: The Dynamic Programming Approach**
 ### Part A: The Exhaustive Search Approach
