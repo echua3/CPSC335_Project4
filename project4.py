@@ -9,9 +9,46 @@
 # Part A: The Exhaustive Search Approach
 # Part B: The Dynamic Programming Approach
 import sys
+import timeit
 import time
 import exhaustive
 import dynamic
+
+def exhaustive_time():
+    """ 
+    function to measure execution time of exhaustive search approach using the 
+    timeit built-in python library
+    """
+    SETUP_CODE = '''
+import exhaustive '''
+    TEST_CODE = '''
+max = 10
+items = [[1, 2], [3, 3], [5, 6], [6, 7]]
+exhaustive.stock_maximization(max, items)'''
+
+    times = timeit.repeat(setup = SETUP_CODE,
+                          stmt = TEST_CODE,
+                          number = 10000)
+    # print time
+    print('Exhaustive Search Approach Time: {}'.format(min(times))) 
+
+def dynamic_time():
+    """ 
+    function to measure execution time of dynamic programming approach using the 
+    timeit built-in python library
+    """
+    SETUP_CODE = '''
+import dynamic '''
+    TEST_CODE = '''
+max = 10
+items = [[1, 2], [3, 3], [5, 6], [6, 7]]
+dynamic.stock_maximization(max, items)'''
+
+    times = timeit.repeat(setup = SETUP_CODE,
+                          stmt = TEST_CODE,
+                          number = 10000)
+    # print time
+    print('Dynamic Programming Approach Time: {}'.format(min(times))) 
 
 def main():
     # check for file input argument
@@ -45,10 +82,13 @@ def main():
     print("Exhaustive Approach Result:")
     print("{total:.2f} {best}".format(total = exhaustive.total_value(items, best_indices_e)[1], best = best_indices_e))
     print("Runtime: ", time_e)      # print runtime 
-    
+
     print("Dynamic Approach Result:")
     print("{total} {best}".format(total = dynamic.total_value(items, best_indices_d), best = best_indices_d))
     print("Runtime: ", time_d)      # print runtime
+    print()
+    exhaustive_time()
+    dynamic_time()
 
 if __name__ == "__main__":
     main()
