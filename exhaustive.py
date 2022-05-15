@@ -52,7 +52,7 @@ def combinations(items: list, l: int):
 def stock_combinations(items: list) -> list:
     """ 
     Function to get the powerset of a set(list), returned as a list.
-    Utilizes the itertools python module to create iterators
+    Utilizes the chain method to make iterators
         parameters -
             items (list): an iterable variable, or list
         return -
@@ -95,6 +95,28 @@ def verify_combination(M: float, items: list, candidate: list) -> bool:
             otherwise
     """
     return (total_value(items, candidate)[1] <= M)
+
+def greater_than(items: list, a: list, b: list) -> bool:
+    """
+    This function evaluates if the indices in a represent a higher value 
+    subset of stocks than the indices listed in b.
+
+        parmeters -
+            items (list): list of lists [x = number of stocks, y = value]
+            a (list): list of indices in items
+            b (list): list of indices in items
+
+        return -
+            result (bool): true if a > b, false otherwise
+    """
+    a_stocks, a_value = total_value(items, a)
+    b_stocks, b_value = total_value(items, b)
+    if a_value > b_value:
+        return True
+    elif a_value == b_value and a_stocks > b_stocks:
+        return True
+    else:
+        return False
          
 
 def stock_maximization(M: float, items: list) -> list:
@@ -114,15 +136,8 @@ def stock_maximization(M: float, items: list) -> list:
     best = None
     for candidate in stock_combinations(range(len(items))):
         if verify_combination(M, items, candidate):
-            if best == None:
+            if best == None or greater_than(items, candidate, best):
                 best = candidate
-            else:
-                candidate_stocks, candidate_value = total_value(items, candidate)
-                best_stocks, best_value = total_value(items, best)
-                if candidate_value > best_value:
-                    best = candidate
-                elif candidate_value == best_value and candidate_stocks > best_stocks:
-                    best = candidate
     return best
 
 
@@ -145,7 +160,7 @@ def main():
     
     print("Total Available:", max)
     print("Items:", items)
-    best_indices =  stock_maximization(max, items)
+    best_indices =  list(stock_maximization(max, items))
     print("{total:.2f} {best}".format(total = total_value(items, best_indices)[1], best = best_indices))
 
 if __name__ == "__main__":
