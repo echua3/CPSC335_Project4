@@ -20,7 +20,7 @@ def first_valid(iterable, default=False, pred=lambda x: x is not None):
     """
     return next(filter(pred, iterable), default)
 
-def total_stocks(items: list, indices: list) -> float:
+def total_stocks(items: list, indices: list) -> int:
     """
     Function that calculates the total number of stocks given in items with
     the indices listed in indices.
@@ -30,14 +30,14 @@ def total_stocks(items: list, indices: list) -> float:
             indices (list): list of indices in items
 
         return -
-            total (float): total value of all the x inputs in list
+            total (int): total value of all the x inputs in list
     """
     total = 0
     for i in indices:
         total += items[i][0]
     return total
 
-def total_value(items: list, indices: list) -> float:
+def total_value(items: list, indices: list) -> int:
     """
     Function that calculates the total value of the stocks given in items with
     the indices listed in indices.
@@ -61,7 +61,7 @@ def stock_maximization(M: int, items: list) -> list:
     the solved sub-problems.
     
     parameters - 
-        M (float): total available investment sum
+        M (int): total available investment sum
         items (list): list of lists [x = number of stocks, y = value]
     
     return -
