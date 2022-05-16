@@ -54,7 +54,7 @@ def main():
     # check for file input argument
     if len(sys.argv) == 2:
         with open(sys.argv[1], 'r') as file:   
-            max = int(math.floor(float(next(file))))    # read max from first line
+            max = int(math.floor(float(next(file))))  # read max from first line
             items = []
             for line in file:           # read items
                 current_item = line.rstrip('\n').split(", ")
@@ -74,6 +74,7 @@ def main():
     best_indices_d =  dynamic.stock_maximization(max, items)
 
     # print results
+    print()
     print("Exhaustive Approach Result:")
     print("{total:.2f} {best}".format(total = exhaustive.total_value(items,
         best_indices_e)[1], best = best_indices_e))
