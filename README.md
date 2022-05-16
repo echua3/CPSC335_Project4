@@ -26,7 +26,7 @@ running `python3 exhaustive.py test1.txt`
 ```
 Total Available: 10.0
 Items: [[1, 2.0], [3, 3.0], [5, 6.0], [6, 7.0]]
-10.00 (1, 3)
+10.00 [1, 3]
 ```
 
 If no document is passed, running `python3 exhaustive.py` will print the 
@@ -56,3 +56,4 @@ resulting lists from the given input found in the assignment and test1.txt.
 
 ### Project 4
 The script **project4.py** accepts one txt document as input. It runs both exhaustive.py and dynamic.py.
+The runtime for both approaches is printed.
