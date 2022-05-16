@@ -8,6 +8,7 @@
 # Project 4: Exhaustive vs. Dynamic Programing
 # Part B: The Dynamic Programming Approach
 import sys
+import math
 
 def first_valid(iterable, default=False, pred=lambda x: x is not None):
     """
@@ -91,11 +92,13 @@ def main():
      # check for file input argument
     if len(sys.argv) == 2:
         with open(sys.argv[1], 'r') as file:   
-            max = int(next(file))     # read max from first line
+            max = int(math.floor(float(next(file))))  # read max from first line
             items = []
             for line in file:           # read items
                 current_item = line.rstrip('\n').split(", ")
-                items.append(list(map(int, current_item)))
+                current_item[0] = int(current_item[0])
+                current_item[1] = math.floor(float(current_item[1]))
+                items.append(list(current_item))
         file.close
     else:
         # default values
